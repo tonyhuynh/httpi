@@ -67,7 +67,8 @@ module HTTPI
       def setup_client(request)
         basic_setup request
         setup_auth request if request.auth.http?
-        setup_ssl_auth request.auth.ssl if request.auth.ssl?
+        # setup_ssl_auth request.auth.ssl if request.auth.ssl?
+        setup_ssl_auth request.auth.ssl if request.auth.ssl
       end
 
       def basic_setup(request)
@@ -84,7 +85,8 @@ module HTTPI
         unless ssl.verify_mode == :none
           client.ssl_config.client_cert = ssl.cert
           client.ssl_config.client_key = ssl.cert_key
-          client.ssl_config.client_ca = ssl.ca_cert if ssl.ca_cert_file
+          # client.ssl_config.client_ca = ssl.ca_cert if ssl.ca_cert_file
+          client.ssl_config.set_trust_ca(ssl.ca_cert_file) if ssl.ca_cert_file
         end
         client.ssl_config.verify_mode = ssl.openssl_verify_mode
       end
