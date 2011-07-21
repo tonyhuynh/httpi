@@ -82,12 +82,10 @@ module HTTPI
       end
 
       def setup_ssl_auth(ssl)
-        unless ssl.verify_mode == :none
-          client.ssl_config.client_cert = ssl.cert
-          client.ssl_config.client_key = ssl.cert_key
-          # client.ssl_config.client_ca = ssl.ca_cert if ssl.ca_cert_file
-          client.ssl_config.set_trust_ca(ssl.ca_cert_file) if ssl.ca_cert_file
-        end
+        client.ssl_config.client_cert = ssl.cert
+        client.ssl_config.client_key = ssl.cert_key
+        # client.ssl_config.client_ca = ssl.ca_cert if ssl.ca_cert_file
+        client.ssl_config.set_trust_ca(ssl.ca_cert_file) if ssl.ca_cert_file
         client.ssl_config.verify_mode = ssl.openssl_verify_mode
       end
 
